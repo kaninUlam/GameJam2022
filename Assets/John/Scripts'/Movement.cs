@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     public float jumpheight;
     public float jumpforce;
     Rigidbody2D rb2d;
+    public bool grounded;
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +24,25 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb2d.AddForce(Vector2.up * jumpforce * jumpheight, ForceMode2D.Force);
+           if(grounded == true)
+            {
+                Jump();
+                grounded = false;
+            }
         }
         rb2d.AddForce(Vector2.right * horizontalInput * speed);
         
+    }
+    public void Jump()
+    {
+        rb2d.AddForce(Vector2.up * jumpforce * jumpheight, ForceMode2D.Force);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            grounded = true;
+        }
     }
 }
