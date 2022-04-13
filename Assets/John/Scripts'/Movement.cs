@@ -20,11 +20,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-           if(grounded == true)
-            {
-                Jump();
-                grounded = false;
-            }
+           
         
         
     }
@@ -35,13 +31,20 @@ public class Movement : MonoBehaviour
     }
     public void Jump()
     {
-        rb2d.AddForce(Vector2.up * jumpforce * jumpheight, ForceMode2D.Force);
+        Debug.Log("Jump");
+        if (grounded == true)
+        {
+            rb2d.AddForce(Vector2.up * jumpforce * jumpheight, ForceMode2D.Force);
+            grounded = false;
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Ground")
         {
+
             grounded = true;
         }
     }
