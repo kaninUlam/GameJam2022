@@ -26,7 +26,7 @@ public class Timer : MonoBehaviour
         _timeCounter.text = "00:00:00";
         _timerGoing = false;
 
-        
+        BeginTimer();
     }
 
     

@@ -1,48 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
 {
-    public float speed;
-    public float jumpheight;
-    public float jumpforce;
-    Rigidbody2D rb2d;
-    public bool grounded;
-    public float horizontalInput;
+    //For Animator
+    [HideInInspector] public bool Grounded;
+    [HideInInspector] public bool Jumping;
+    [HideInInspector] public float VerticalVelocity;
+    [HideInInspector] public float HorizontalVelocity;
 
-    // Start is called before the first frame update
+    public float Speed = 8;
+    public float JumpSpeed = 15f;
+
+    CapsuleCollider2D _capsule;
+    Rigidbody2D _rb;
+    LayerMask _collisionLayers = ~(1 << 8);
+
+    const float _groundCheckDist = 0.1f;
+    const float _groundCheckSizeMulti = 0.9f;
+
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-           if(grounded == true)
-            {
-                Jump();
-                grounded = false;
-            }
-        
-        
-    }
-    public void Move(float input)
-    {
-        /*rb2d.AddForce(Vector2.right * horizontalInput * speed);*/
-        horizontalInput = input * speed;
+        _capsule = GetComponent<CapsuleCollider2D>();
+        _rb = GetComponent<Rigidbody2D>();
     }
     public void Jump()
     {
-        rb2d.AddForce(Vector2.up * jumpforce * jumpheight, ForceMode2D.Force);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Ground")
+        if (Grounded)
         {
-            grounded = true;
+            Jumping = true;
+            Grounded = false;
         }
+    }
+    public void Move(float input)
+    {
+        HorizontalVelocity = input * Speed;
+    }
+    void FixedUpdate()
+    {
+        Grounded = CheckGrounded();
+
+        if (Jumping)
+        {
+            VerticalVelocity = JumpSpeed;
+            Jumping = false;
+        }
+        else
+        {
+            VerticalVelocity = _rb.velocity.y;
+        }
+
+        _rb.velocity = new Vector2(HorizontalVelocity, VerticalVelocity);
+    }
+    bool CheckGrounded()
+    {
+        Vector2 pos = (Vector2)transform.position + _capsule.offset;
+        Vector2 direction = new Vector2(0, -_groundCheckDist);
+        Vector2 size = _capsule.size * _groundCheckSizeMulti;
+        RaycastHit2D hit = Physics2D.CapsuleCast(pos, size, _capsule.direction, 0, direction, direction.magnitude, _collisionLayers);
+        return hit.collider != null;
     }
 }
