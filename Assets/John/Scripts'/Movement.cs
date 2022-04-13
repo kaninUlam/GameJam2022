@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     public float jumpforce;
     Rigidbody2D rb2d;
     public bool grounded;
+    public float horizontalInput;
 
     // Start is called before the first frame update
     void Start()
@@ -19,19 +20,18 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
            if(grounded == true)
             {
                 Jump();
                 grounded = false;
             }
-        }
-        rb2d.AddForce(Vector2.right * horizontalInput * speed);
         
+        
+    }
+    public void Move(float input)
+    {
+        /*rb2d.AddForce(Vector2.right * horizontalInput * speed);*/
+        horizontalInput = input * speed;
     }
     public void Jump()
     {
