@@ -40,8 +40,9 @@ public class Timer : MonoBehaviour
         StartCoroutine(UpdateTimer());
     }
     
-    void EndTimer()
+    public void EndTimer()
     {
+        
         _timerGoing = false;
     }
 

@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public class Win : MonoBehaviour
 {
     public Text _youWin;
+    public Timer _timer;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         _youWin.enabled = false;
         Time.timeScale = 1;
     }
@@ -25,9 +27,9 @@ public class Win : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-
+            _timer.EndTimer();
             _youWin.enabled = true;
-            Time.timeScale = 0;
+            
             StartCoroutine(Restart());
         }
     }
@@ -35,11 +37,12 @@ public class Win : MonoBehaviour
 
     IEnumerator Restart()
     {
-        new WaitForSeconds(2f);
+        yield return  new WaitForSeconds(2f);
+        Time.timeScale = 1;
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
 
-        yield return null;
+        
     }
 
 }
