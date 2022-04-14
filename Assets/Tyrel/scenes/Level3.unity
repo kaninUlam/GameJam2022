@@ -1229,6 +1229,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimerCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8720804967088469021, guid: 1289226fc1fde4b4690f9dd0cf2489f6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8720804967088469022, guid: 1289226fc1fde4b4690f9dd0cf2489f6, type: 3}
       propertyPath: m_Pivot.x
       value: 0
