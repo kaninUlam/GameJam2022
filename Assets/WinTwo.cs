@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Win : MonoBehaviour
+public class WinTwo : MonoBehaviour
 {
     public Text _youWin;
     public Timer _timer;
@@ -12,7 +12,7 @@ public class Win : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         _youWin.enabled = false;
         Time.timeScale = 1;
     }
@@ -20,16 +20,16 @@ public class Win : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             _timer.EndTimer();
             _youWin.enabled = true;
-            
+
             StartCoroutine(Restart());
         }
     }
@@ -37,12 +37,12 @@ public class Win : MonoBehaviour
 
     IEnumerator Restart()
     {
-        yield return  new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f);
         Time.timeScale = 1;
-        
-        SceneManager.LoadScene(1);
 
-        
+        SceneManager.LoadScene(0);
+
+
     }
 
 }

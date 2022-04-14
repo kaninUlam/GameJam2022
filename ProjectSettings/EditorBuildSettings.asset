@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Tyrel/scenes/Level1.unity
+    guid: 10c8b953af8db194fa30b6d129281895
+  - enabled: 1
+    path: Assets/Tyrel/scenes/Level3.unity
+    guid: 491911012e627814283677cc546a4ea7
   m_configObjects: {}
